@@ -1,0 +1,92 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/paper-input/paper-input.html">
+<link rel="import" href="../../bower_components/paper-button/paper-button.html">
+
+<dom-module id="my-todo">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+
+      #todoContainer {
+          border: 1px solid gray;
+          max-width: 400px;
+          height: auto;
+      }
+
+      #todoHeader {
+          position: relative;
+          height: 80px;
+          width: 100%;
+      }
+
+      paper-input {
+          position: absolute;
+          right: 90px;
+          left: 5px;
+      }
+
+      paper-button { 
+          position: absolute;
+          border: 1px solid black;
+          font-weight: normal;
+          font-size: 12px;
+          right: 5px;
+          top: calc(50% - 18px);
+      }
+
+      #todoBody{
+          height: auto;
+          width: 100%;
+      }
+
+      .todoItem {
+          height: auto;
+          width: 100%;
+          border-bottom: 1px solid black;
+          padding-bottom: 8px;
+      }
+      
+      .todoText {
+          font-size: 16px;
+          top: calc(50% - 16px);
+      }
+
+    </style>
+
+    <div id="todoContainer">
+        <div id="todoHeader">
+            <paper-input id="todoInput" label="Need to be done"></paper-input>
+            <paper-button on-tap="_handleTap">Add</paper-button>
+        </div>
+        <div id="todoBody">
+            <template is="dom-repeat" items="{{todos}}">
+                <div class="todoItem">
+                    <p class="todoText">{{index}} - {{item}}</p>
+                </div>
+            </template>
+        </div>
+    </div>
+    
+
+  </template>
+  <script>
+    Polymer({
+
+      is: 'my-todo',
+
+      ready: function() {
+        this.todos = [];
+      },
+
+      _handleTap: function() {
+        var newTodo = this.$.todoInput.value;
+        if(newTodo != ""){
+          this.push('todos', newTodo);
+        }
+      },
+
+    });
+  </script>
+</dom-module>

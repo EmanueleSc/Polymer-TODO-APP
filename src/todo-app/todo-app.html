@@ -1,0 +1,45 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../todo-model/todo-model.html">
+<link rel="import" href="../todo-input/todo-input.html">
+<link rel="import" href="../todo-item/todo-item.html">
+
+<dom-module id="todo-app">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+    </style>
+
+    
+    <input is="todo-input" id="newTodo" on-todo-input-commit='addTodoAction'></input>
+    <todo-model id="model" items="{{todos}}"></todo-model>
+    <template is="dom-repeat" items="{{todos}}">
+      <todo-item item="{{item}}" on-todo-destroy-item="destroyItemAction"></todo-item>
+    </template>
+
+
+  </template>
+  <script>
+    Polymer({
+
+      is: 'todo-app',
+
+      attached: function() {
+        this.model = document.querySelector("#model");
+      },
+
+      addTodoAction: function(){
+        this.model.newItem(this.$.newTodo.value);
+        this.$.newTodo.value = '';
+      },
+
+      destroyItemAction: function(e){
+        var index = e.model.index;
+        var item = this.get(["todos", index]);
+        this.model.destroyItem(item);
+      }
+
+    });
+  </script>
+</dom-module>

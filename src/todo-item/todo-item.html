@@ -1,0 +1,47 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+
+<dom-module id="todo-item">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+
+      :host.completed label {
+        color: #d9d9d9;
+	      text-decoration: line-through;
+      }
+      
+    </style>
+
+    <!-- Two-way binding to a non-Polymer element: checked="{{hostProp::target-change-event}}" -->
+    <input type="checkbox" checked="{{item.completed::change}}">
+    <label>{{item.title}}</label>
+    <button  on-tap="_destroyAction">x</button>
+
+  </template>
+  <script>
+    Polymer({
+      is: 'todo-item',
+
+      properties: {
+          item: {
+              type: Object
+          }
+      },
+
+      observers: [
+        '_observerTest(item.completed)'
+      ],
+
+      _destroyAction: function() {
+          this.fire('todo-destroy-item', this.item);
+      },
+
+      _observerTest: function(completed) {
+        this.toggleClass('completed', completed);
+      }
+
+    });
+  </script>
+</dom-module>

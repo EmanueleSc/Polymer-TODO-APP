@@ -1,0 +1,7 @@
+{
+  "name": "todo_app",
+  "short_name": "todo_app",
+  "description": "My first Polymer application",
+  "start_url": "/",
+  "display": "standalone"
+}

@@ -1,0 +1,51 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/iron-localstorage/iron-localstorage.html">
+
+<dom-module id="todo-model">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+    </style>
+
+    <iron-localstorage name="todos-storage"
+        value="{{items}}"
+        on-iron-localstorage-load-empty="_initializeDefaultItems">
+    </iron-localstorage>
+
+  </template>
+  <script>
+
+    Polymer({
+      is: 'todo-model',
+      
+      properties: {
+          items: {
+              type: Array,
+              notify: true
+          }
+      },
+
+      _initializeDefaultItems: function() {
+          this.items = [];
+      },
+
+      newItem: function(title) {
+        title = String(title).trim();
+        if(!title) {
+            return;
+        }
+        this.push('items', {title: title, completed: false});
+      },
+
+      destroyItem: function(item) {
+        var i = this.items.indexOf(item);
+        if (i > -1) {
+          this.splice('items', i, 1);
+        }
+      }
+
+    });
+  </script>
+</dom-module>

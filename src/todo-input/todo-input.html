@@ -1,0 +1,32 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+
+<dom-module id="todo-input">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+    </style>
+  </template>
+  <script>
+
+    var ENTER_KEY = 13;
+
+    Polymer({
+      is: 'todo-input',
+
+      extends: 'input',
+
+      listeners: {
+          'keypress': '_keypressAction'
+      },
+
+      _keypressAction: function(e) {
+          if(e.keyCode === ENTER_KEY) {
+              this.fire('todo-input-commit');
+          }
+      }
+
+    });
+  </script>
+</dom-module>
